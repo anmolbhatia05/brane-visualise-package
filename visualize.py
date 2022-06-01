@@ -8,6 +8,8 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 
+# The functions
+
 
 def visualize():
     try:
@@ -34,10 +36,12 @@ def visualize():
         return 1
 
 
+# The entrypoint of the script
 if __name__ == "__main__":
     if len(sys.argv) != 2 or (sys.argv[1] != "visualize" and sys.argv[1] != "read"):
         exit(1)
 
     command = sys.argv[1]
     if command == "visualize":
+        # Print the result with the YAML package
         print(yaml.dump({"status": visualize()}))

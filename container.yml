@@ -1,14 +1,16 @@
-# Define the file metadata
-name: bvp
+# Container.yml for this `brane_visualize` package
+# Basic information about this package
+name: brane_visualize
 version: 1.0.0
 kind: ecu
 
-# Define the files that are part of the package
+# These files are part of this package
 files: 
 - visualize.py
 
 # Defines the file to call whenever a function is called
 entrypoint: 
+  # 'task' means the script should be run synchronously (i.e., blocking)
   kind: task 
   exec: visualize.py 
 
@@ -18,6 +20,7 @@ dependencies:
 - python3-yaml
 - python3-pip
 
+# Python packages required for this package
 install: 
 - pip3 install pandas seaborn matplotlib
 

@@ -25,11 +25,23 @@ install:
 - pip3 install pandas seaborn matplotlib
 
 actions: 
-  visualize:
+  visualize_EDA:
     command:
       args:
-      - visualize
+      - visualize_EDA
     input:
+    - name: name
+      type: string
+    output: 
+    - name: status
+      type: integer
+  visualize_results:
+    command:
+      args:
+      - visualize_results
+    input:
+    - name: name
+      type: string
     output: 
     - name: status
       type: integer

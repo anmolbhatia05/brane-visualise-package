@@ -84,6 +84,7 @@ def draw_feature_importance(df, mode):
     model = get_model(mode)
     model.fit(x_train, y_train)
 
+    
     importance = pd.DataFrame({'feature': x_train.columns, 'importance': np.round(model.feature_importances_,3)})
     importance = importance.sort_values('importance', ascending=False).set_index('feature')
     importance.plot(kind='bar', rot=0)
@@ -93,7 +94,7 @@ def get_model(name):
     if(name=='dtc'):
         model = DecisionTreeClassifier()
     elif(name=='rfc'):
-        model = RandomForestClassifier(n_estimators=200, bootstrap=True, criterion= 'entropy', min_samples_leaf=5, min_samples_split=2, random_state=1)
+        model = RandomForestClassifier()
     elif(name=='bnb'):
         model = BernoulliNB()
     return model
@@ -103,12 +104,14 @@ def draw_heat_map(df):
     x_train = df.drop('Survived', axis=1)
     temp = pd.concat([x_train.iloc[:891], y_train], axis = 1)
     corr = temp.corr()
+    plt.figure(figsize=(10, 10))
     heatmap = sns.heatmap(corr, cbar = True, annot = True, linewidths = 0.4)
+    
     plt.savefig('/data/img/heatmap.jpeg')
 
 def visualize_model(name: str, mode: str) -> int:
     try:
-        df = pd.read_csv(name, index_col = False)
+        df = pd.read_csv(name, index_col=0)
         draw_heat_map(df)
         draw_feature_importance(df, mode)
         return 0

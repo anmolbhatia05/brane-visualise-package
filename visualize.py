@@ -4,41 +4,19 @@ import os
 import sys
 import yaml
 
+# libraries imported for plotting
 import pandas as pd
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 
+# import scikit classifiers
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.naive_bayes import BernoulliNB
 
-# def visualize():
-#     try:
-#         df = pd.read_csv('/data/train.csv')
-#         sns.countplot(df['Survived'])
-#         plt.savefig('/data/first.jpeg')
-#         return 0
-    # sns.countplot(train['Pclass'])
-    # plt.bar(list(train['Sex'].value_counts().keys()),list(train['Sex'].value_counts()))
-    # graph = sns.FacetGrid(train, col='Survived')
-    # graph.map(plt.hist, 'Age', bins=20)
-    # grid = sns.FacetGrid(train, col='Survived', row='Pclass', size=2.2, aspect=1.6)
-    # grid.map(plt.hist, 'Age', alpha=.5, bins=20)
-    # grid.add_legend();
-    # plt.figure(figsize=(10,5))
-    # sns.countplot(x='Pclass', data=train, hue='Survived').set(title='Survived Passengers based on Pclass')
-    # plt.figure(figsize=(10,5))
-    # sns.countplot(x='Sex', data=train, hue='Survived').set(title='Survived Passengers based on Sex')
-    # plt.figure(figsize=(10, 5))
-    # sns.countplot(x='Embarked', data=train, hue='Survived').set(title='Survived Passengers based on port of embarkation')
-    # plt.figure(figsize=(10, 5))
-    # sns.countplot(x='Pclass', data=train, hue='Survived').set(title='Survived Passengers based on Pclass')
-    # except:
-    #     return 1
-
-
-def barplots(df):
+# this method plots bar plots and saves files in jpeg format
+def barplots(df):   
     sns.countplot(df.Survived)
     plt.savefig('/data/img/survived.jpeg')
 
@@ -47,7 +25,10 @@ def barplots(df):
 
     sns.barplot(x='Pclass', y='Survived', data=df)
     plt.savefig('/data/img/bar_pclass_vs_survived.jpeg')
+    get_null_values(df)
 
+
+# this method plots histograms plots and saves files in jpeg format
 def hist(df):
     graph = sns.FacetGrid(df, col='Survived')
     graph.map(plt.hist, 'Age', bins=20)
@@ -57,7 +38,8 @@ def hist(df):
     grid.map(plt.hist, 'Age', alpha=.5, bins=20)
     grid.savefig('/data/img/hist_pclass_vs_survived.jpeg')
 
-def plot_null_values(df):
+# this method plots graph with features null values and saves in jpeg format
+def get_null_values(df):
     if df.isnull().sum().sum() != 0:
         na_df = (df.isnull().sum() / len(df)) * 100
     na_df = na_df.drop(na_df[na_df == 0].index).sort_values(ascending=False)
@@ -65,11 +47,12 @@ def plot_null_values(df):
     missing_data.plot(kind = "barh")
     plt.savefig('/data/img/missing_values.jpeg')
 
+''' Based on the name input, it first fetches the dataframe and calls the internal methods 
+    to plot graphs used for understanding the data (EDA).  
+'''
 def visualize_EDA(name: str) -> int:
     try:
         df = pd.read_csv(name)
-        #missing_values
-        plot_null_values(df)
         # Barplots
         barplots(df)
         # Histograms
@@ -78,18 +61,19 @@ def visualize_EDA(name: str) -> int:
     except IOError as e:
         return e.errno
 
+# this function draws the feature importance graph and takes dataframe and model type in input
+# mode possible values can be 'dtc' for DecisionTreeClassifier and 'rfc' is for RandomForestClassifier
 def draw_feature_importance(df, mode):
     y_train = df['Survived']
     x_train = df.drop('Survived', axis='columns')
     model = get_model(mode)
     model.fit(x_train, y_train)
-
-    
     importance = pd.DataFrame({'feature': x_train.columns, 'importance': np.round(model.feature_importances_,3)})
     importance = importance.sort_values('importance', ascending=False).set_index('feature')
     importance.plot(kind='bar', rot=0)
     plt.savefig('/data/img/feature_importance'+str(mode)+'.jpeg')
 
+# this method returns the machine learning model using sklearn library functions
 def get_model(name):
     if(name=='dtc'):
         model = DecisionTreeClassifier()
@@ -99,6 +83,8 @@ def get_model(name):
         model = BernoulliNB()
     return model
 
+# this method plots heat map and shows correlation of features and saves heat map as jpeg format
+# input is dataframe
 def draw_heat_map(df):
     y_train = df['Survived']
     x_train = df.drop('Survived', axis=1)
@@ -109,6 +95,9 @@ def draw_heat_map(df):
     
     plt.savefig('/data/img/heatmap.jpeg')
 
+''' Based on the name input, it first fetches the dataframe and calls the internal methods 
+    to plot heat and feature important graphs 
+'''
 def visualize_model(name: str, mode: str) -> int:
     try:
         df = pd.read_csv(name, index_col=0)
@@ -118,6 +107,9 @@ def visualize_model(name: str, mode: str) -> int:
     except IOError as e:
         return e.errno
 
+''' Based on the function called from branscript this main function calls the functions
+    with business logic present in this python file, provides them suitable input data
+'''
 if __name__ == "__main__":
     if len(sys.argv) != 2 or (sys.argv[1] != "visualize_EDA" and sys.argv[1] != "read" and sys.argv[1] != "visualize_results"):
         exit(1)

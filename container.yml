@@ -1,26 +1,28 @@
 # Define the file metadata
-name: bvp
+name: brane_visualize
 version: 1.0.0
 kind: ecu
 
-# Define the files that are part of the package
+# file with python code for functions
 files: 
 - visualize.py
 
-# Defines the file to call whenever a function is called
+# the file to call whenever a function is called
 entrypoint: 
   kind: task 
   exec: visualize.py 
 
-# Define the dependencies (as Ubuntu packages)
+# all the dependencies
 dependencies:
 - python3
 - python3-yaml
 - python3-pip
 
+# intall the libraries used in the package
 install: 
 - pip3 install pandas numpy seaborn matplotlib scikit-learn
 
+# details of functions of the package with input and output details
 actions: 
   visualize_EDA:
     command:

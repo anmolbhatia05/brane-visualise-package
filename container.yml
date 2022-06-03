@@ -1,29 +1,32 @@
-# Define the file metadata
+# Container.yml for this `brane_visualize` package
+# Basic information about this package
 name: brane_visualize
 version: 1.0.0
 kind: ecu
 
-# file with python code for functions
+# These files are part of this package
 files: 
 - visualize.py
 
-# the file to call whenever a function is called
+# Defines the file to call whenever a function is called
 entrypoint: 
+  # 'task' means the script should be run synchronously (i.e., blocking)
   kind: task 
   exec: visualize.py 
 
-# all the dependencies
+# Define the dependencies (as Ubuntu packages)
 dependencies:
 - python3
 - python3-yaml
 - python3-pip
 
-# intall the libraries used in the package
+# Python packages required for this package
 install: 
 - pip3 install pandas numpy seaborn matplotlib scikit-learn
 
 # details of functions of the package with input and output details
 actions: 
+  # Creates the graph for EDA tasks
   visualize_EDA:
     command:
       args:
@@ -34,6 +37,8 @@ actions:
     output: 
     - name: status
       type: integer
+  
+  # Creates the graph for visualization 
   visualize_results:
     command:
       args:

@@ -56,7 +56,6 @@ def get_null_values(df):
     missing_data.plot(kind="barh")
     plt.savefig('/data/img/missing_values.jpeg')
 
-
 def visualize_EDA(name: str) -> int:
     """
         Based on the name input, a

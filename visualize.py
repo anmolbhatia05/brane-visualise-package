@@ -32,7 +32,7 @@ def barplots(df):
 
     sns.barplot(x='Pclass', y='Survived', data=df)
     plt.savefig('/data/img/bar_pclass_vs_survived.jpeg')
-    get_null_values(df)
+    # get_null_values(df)
 
 
 def hist(df):
@@ -66,7 +66,7 @@ def visualize_EDA(name: str) -> int:
         # Barplots
         barplots(df)
         # Histograms
-        hist(df)
+        # hist(df)
         return 0
     except IOError as e:
         return e.errno
@@ -119,7 +119,7 @@ def visualize_model(name: str, mode: str) -> int:
     try:
         df = pd.read_csv(name, index_col=0)
         draw_heat_map(df)
-        draw_feature_importance(df, mode)
+        # draw_feature_importance(df, mode)
         return 0
     except IOError as e:
         return e.errno

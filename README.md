@@ -28,9 +28,9 @@ Follow these instructions -
    
 7. Run the following to build the package - `brane build ./container.yml`
 
-8. Push the package to run it remotely in your instance (do `brane login http://127.0.0.1 --user <username>` first) - `brane push brane_compute`
+8. Push the package to run it remotely in your instance (do `brane login http://127.0.0.1 --user <username>` first) - `brane push brane_visualize`
 
-9.  Use branescript (import this package in it by adding `import brane_compute;` on the top) or do `brane repl --remote http://127.0.0.1:50053` (If you running on a K8 cluster, use the cluster address instead)
+9.  Use branescript (import this package in it by adding `import brane_visualize;` on the top) or do `brane repl --remote http://127.0.0.1:50053` (If you running on a K8 cluster, use the cluster address instead)
 
 Or 
 

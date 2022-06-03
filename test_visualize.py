@@ -2,7 +2,7 @@
 import pytest
 import pandas as pd
 
-import brane_visualize
+import visualize
 
 def test_visualize_eda():
     test_input_path = './data/train.csv'

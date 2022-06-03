@@ -56,9 +56,10 @@ def get_null_values(df):
     missing_data.plot(kind="barh")
     plt.savefig('/data/img/missing_values.jpeg')
 
+
 def visualize_EDA(name: str) -> int:
     """
-        Based on the name input, a
+        Creates visualisation graphs for null values, data skewness, feature correlation
     """
     try:
         df = pd.read_csv(name)
@@ -124,12 +125,23 @@ def visualize_model(name: str, mode: str) -> int:
         return e.errno
 
 
+def create_image_folder() -> str:
+    """
+        Function to store the visualisation (histogram and barplots) graphs in the persistent folder /data
+    """
+    try:
+        os.mkdir("/data/img")
+        return "created"
+    except:
+        return "error"
+
+
 # The entrypoint of the script
 # Based on the function called from branscript this main function calls the functions
 # with business logic present in this python file, provides them suitable input data
 if __name__ == "__main__":
     # Make sure that at least one argument is given, that is either - 'visualize_EDA' or 'visualize_results'
-    if len(sys.argv) != 2 or (sys.argv[1] != "visualize_EDA" and sys.argv[1] != "read" and sys.argv[1] != "visualize_results"):
+    if len(sys.argv) != 2 or (sys.argv[1] != "visualize_EDA" and sys.argv[1] != "create_img" and sys.argv[1] != "visualize_results"):
         exit(1)
 
     # If it checks out, call the appropriate function
@@ -142,3 +154,6 @@ if __name__ == "__main__":
     elif command == "visualize_results":
         print(yaml.dump({"status": visualize_model(
             os.environ["NAME"], os.environ["MODE"])}))
+
+    elif command == "create_img":
+        print(yaml.dump({"status": create_image_folder()}))

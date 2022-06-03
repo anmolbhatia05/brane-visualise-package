@@ -26,6 +26,16 @@ install:
 
 # details of functions of the package with input and output details
 actions: 
+  # Creates the image folder 
+  create_img:
+    command:
+      args:
+      - create_img
+    input:
+    output: 
+    - name: status
+      type: string
+
   # Creates the graph for EDA tasks
   visualize_EDA:
     command:

@@ -119,7 +119,6 @@ def visualize_model(name: str, mode: str) -> int:
     try:
         df = pd.read_csv(name, index_col=0)
         draw_heat_map(df)
-        # draw_feature_importance(df, mode)
         return 0
     except IOError as e:
         return e.errno

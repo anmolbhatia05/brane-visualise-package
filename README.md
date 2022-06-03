@@ -45,13 +45,14 @@ This will import the package on your container registry hosted on your local/K8 
 ## Brane (external) functions list for this package
 | Brane function      | Description | Input   | Output | Result
 | :---        |    :----:   |          :----: |:----:| ---:|
-|`mount`|Function that mounts the train.csv and test.csv files in this brane package in the /data folder|-|Returns string - "done"/"error"|`train.csv` and `test.csv` is available in /data|
-| `data_shape`      | Function that returns the shape of the dataframe after reading the data from a file.       | path of the file   | shape|shape of the data|
-| `preprocessing`   | Function that preprocesses the dataset (train, test)        | path, isTrain      |Integer - 0 (success)/error code|Preprocesses dataset for models|
-|`modelling`|Function to train the model on the basis mode provided. Mode is the identifier for the machine learning model provided. |path_train, path_test, mode|0/error code|output vector|
-| `get_model_accuracy`      | Function to check the model accuracy      | name   | output|accuracy pf the model|
+|`create_img`|Function to store the visualisation (histogram and barplots) graphs in the persistent folder /data|-|Returns string - "created"/"error"|`/data/img`folder created|
+| `visualize_EDA`      | Creates visualisation graphs for null values, data skewness, feature correlation| path of the file   |Returns string - 0 (success)/ non-zero (error|graphs in /data/img folder|
+| `visualize_results`   | Creates visualisation graphs for final results| name, mode      |Integer - 0 (success)/error code|Preprocesses dataset for models|
 
 ## Automated builds and testing for this package
+
+We have set automated build for this package using github actions and also run tests (pytest) on it. The triggers are `push` and `pull_request`, but, one can run it manually as well. Please refer to the image below to see how. (Click on run workflow(CI))
+![](./workflow.png)
 
 ## How to run the tests locally ?
 Assuming that you are in the root of the repository and downloaded the depencies (in the requirements.txt file), run `pytest -v`.

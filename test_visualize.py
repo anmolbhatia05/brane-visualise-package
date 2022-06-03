@@ -4,8 +4,10 @@ import pandas as pd
 
 import brane_visualize
 
-def test_get_df():
-    test_input_path = './data/sample.csv'
-    assert type(compute.get_df(test_input_path)) == pd.DataFrame
+def test_visualize_eda():
+    test_input_path = './data/train.csv'
+    result = brane_visualize.visualize_EDA(test_input_path)
+    expected_output = 0
+    assert  expected_output == result
 
 

@@ -1,4 +1,5 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.6612495.svg)](https://doi.org/10.5281/zenodo.6612495)
+[![CI](https://github.com/web-services-and-cloud-based-systems/brane-visualise-package/actions/workflows/main.yml/badge.svg)](https://github.com/web-services-and-cloud-based-systems/brane-visualise-package/actions/workflows/main.yml)
 
 # brane_visualize
 
